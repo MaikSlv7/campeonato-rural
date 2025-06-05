@@ -12,12 +12,10 @@ header {
   color: white;
   text-align: center;
   padding: 20px 0;
-  box-shadow: 0 2px 4px rgba(0,0,0,0.1);
   font-family: 'Montserrat', sans-serif;
 }
 header h1 {
   margin: 0;
-  font-size: 2em;
 }
 .container {
   max-width: 1000px;
@@ -27,48 +25,34 @@ header h1 {
   border-radius: 8px;
   box-shadow: 0 2px 4px rgba(0,0,0,0.1);
 }
-.placares {
-  display: grid;
-  grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
-  gap: 10px;
+form {
   margin-bottom: 20px;
-}
-.placar {
-  background-color: #4CAF50;
-  color: white;
-  padding: 15px;
-  border-radius: 6px;
-  font-weight: bold;
-  text-align: center;
-  font-family: 'Montserrat', sans-serif;
-}
-table {
-  border-collapse: collapse;
-  width: 100%;
-  margin-bottom: 20px;
-}
-th, td {
-  border: 1px solid #ccc;
-  padding: 8px;
-  text-align: center;
-}
-th {
-  background-color: #4CAF50;
-  color: white;
-  font-family: 'Montserrat', sans-serif;
-}
-.ultimos-saldos {
-  display: flex;
-  flex-wrap: wrap;
-  gap: 20px;
-}
-.ultimos, .saldos {
-  flex: 1;
   background: #f1f8f4;
   padding: 10px;
   border-radius: 6px;
 }
+input, select, button {
+  margin: 5px;
+}
+button {
+  background: #4CAF50;
+  color: white;
+  border: none;
+  padding: 6px 12px;
+  border-radius: 4px;
+  cursor: pointer;
+}
 h2 {
   color: #4CAF50;
   font-family: 'Montserrat', sans-serif;
+}
+ul {
+  list-style: none;
+  padding: 0;
+}
+li {
+  background: #d1e0d1;
+  margin: 5px 0;
+  padding: 5px;
+  border-radius: 4px;
 }

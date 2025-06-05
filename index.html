@@ -3,7 +3,7 @@
 <html lang="pt-br">
 <head>
 <meta charset="UTF-8">
-<title>Campeonato Rural</title>
+<title>Campeonato Rural - Cadastro</title>
 <link rel="stylesheet" href="style.css">
 </head>
 <body>
@@ -13,39 +13,25 @@
 </header>
 
 <div class="container">
+  <h2>Cadastrar Time</h2>
+  <form id="formTime">
+    Nome do Time: <input type="text" id="nomeTime" required>
+    <button type="submit">Cadastrar Time</button>
+  </form>
+  <ul id="listaTimes"></ul>
 
-  <div class="placares">
-    <div class="placar">São Pedro 1 - 0 União</div>
-    <div class="placar">Juventude 0 - 1 Vila Nova</div>
-    <div class="placar">Floresta 0 - 0 Palmeiras</div>
-    <div class="placar">América 1 - 1 Cruzeiro</div>
-  </div>
-
-  <h2>Tabela de Pontos</h2>
-  <table>
-    <tr><th>P</th><th>Time</th><th>J</th><th>V</th><th>E</th><th>D</th></tr>
-    <tr><td>1</td><td>São Pedro</td><td>7</td><td>6</td><td>1</td><td>0</td></tr>
-    <tr><td>2</td><td>Floresta</td><td>6</td><td>1</td><td>1</td><td>4</td></tr>
-    <tr><td>3</td><td>Juventude</td><td>1</td><td>1</td><td>1</td><td>1</td></tr>
-    <tr><td>4</td><td>União</td><td>9</td><td>3</td><td>0</td><td>6</td></tr>
-  </table>
-
-  <div class="ultimos-saldos">
-    <div class="ultimos">
-      <h2>Últimos Jogos</h2>
-      <p>União 2 x 2 Vila Nova</p>
-      <p>Cruzeiro 1 x 1 Floresta</p>
-      <p>Juventude 3 x 3 América</p>
-    </div>
-    <div class="saldos">
-      <h2>Saldo de Gols</h2>
-      <p>1. Alex - 4</p>
-      <p>2. Lucas - 3</p>
-      <p>3. Rafael - 3</p>
-    </div>
-  </div>
-
+  <h2>Cadastrar Jogador</h2>
+  <form id="formJogador">
+    Nome do Jogador: <input type="text" id="nomeJogador" required><br>
+    Posição: <input type="text" id="posicaoJogador" required><br>
+    Número: <input type="number" id="numeroJogador" required><br>
+    Time:
+    <select id="selectTime" required></select><br>
+    <button type="submit">Cadastrar Jogador</button>
+  </form>
+  <ul id="listaJogadores"></ul>
 </div>
 
+<script src="script.js"></script>
 </body>
 </html>

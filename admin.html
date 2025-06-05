@@ -1,0 +1,44 @@
+
+<!DOCTYPE html>
+<html lang="pt-br">
+<head>
+<meta charset="UTF-8">
+<title>Admin - Cadastro</title>
+<link rel="stylesheet" href="style.css">
+<script>
+  const senha = prompt("Digite a senha para acessar o painel de administração:");
+  if (senha !== "admin123") {
+    alert("Senha incorreta. Redirecionando para a tela de visualização...");
+    window.location.href = "usuario.html";
+  }
+</script>
+</head>
+<body>
+
+<header>
+  <h1>Admin - Campeonato Rural</h1>
+</header>
+
+<div class="container">
+  <h2>Cadastrar Time</h2>
+  <form id="formTime">
+    Nome do Time: <input type="text" id="nomeTime" required>
+    <button type="submit">Cadastrar Time</button>
+  </form>
+  <ul id="listaTimes"></ul>
+
+  <h2>Cadastrar Jogador</h2>
+  <form id="formJogador">
+    Nome do Jogador: <input type="text" id="nomeJogador" required><br>
+    Posição: <input type="text" id="posicaoJogador" required><br>
+    Número: <input type="number" id="numeroJogador" required><br>
+    Time:
+    <select id="selectTime" required></select><br>
+    <button type="submit">Cadastrar Jogador</button>
+  </form>
+  <ul id="listaJogadores"></ul>
+</div>
+
+<script src="admin.js"></script>
+</body>
+</html>

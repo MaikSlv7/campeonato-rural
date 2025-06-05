@@ -5,6 +5,13 @@
 <meta charset="UTF-8">
 <title>Admin - Cadastro</title>
 <link rel="stylesheet" href="style.css">
+<script>
+  const senha = prompt("Digite a senha para acessar o painel de administração:");
+  if (senha !== "admin123") {
+    alert("Senha incorreta. Redirecionando para a tela de visualização...");
+    window.location.href = "usuario.html";
+  }
+</script>
 </head>
 <body>
 

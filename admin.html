@@ -3,13 +3,13 @@
 <html lang="pt-br">
 <head>
 <meta charset="UTF-8">
-<title>Admin - Cadastro</title>
+<title>Admin - Cadastro de Jogos</title>
 <link rel="stylesheet" href="style.css">
 <script>
   const senha = prompt("Digite a senha para acessar o painel de administração:");
   if (senha !== "admin123") {
     alert("Senha incorreta. Redirecionando para a tela de visualização...");
-    window.location.href = "usuario.html";
+    window.location.href = "index.html";
   }
 </script>
 </head>
@@ -20,23 +20,18 @@
 </header>
 
 <div class="container">
-  <h2>Cadastrar Time</h2>
-  <form id="formTime">
-    Nome do Time: <input type="text" id="nomeTime" required>
-    <button type="submit">Cadastrar Time</button>
+  <h2>Cadastrar Novo Jogo</h2>
+  <form id="formJogo">
+    Time A: <input type="text" id="timeA" required><br>
+    Time B: <input type="text" id="timeB" required><br>
+    Data: <input type="date" id="dataJogo" required><br>
+    Hora: <input type="time" id="horaJogo" required><br>
+    Ao vivo: <input type="checkbox" id="aoVivo"><br>
+    <button type="submit">Cadastrar Jogo</button>
   </form>
-  <ul id="listaTimes"></ul>
 
-  <h2>Cadastrar Jogador</h2>
-  <form id="formJogador">
-    Nome do Jogador: <input type="text" id="nomeJogador" required><br>
-    Posição: <input type="text" id="posicaoJogador" required><br>
-    Número: <input type="number" id="numeroJogador" required><br>
-    Time:
-    <select id="selectTime" required></select><br>
-    <button type="submit">Cadastrar Jogador</button>
-  </form>
-  <ul id="listaJogadores"></ul>
+  <h2>Jogos Cadastrados</h2>
+  <ul id="listaJogos"></ul>
 </div>
 
 <script src="admin.js"></script>

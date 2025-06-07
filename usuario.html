@@ -40,5 +40,36 @@
   </table>
 </div>
 
+<script>
+  // Buscar jogos ao vivo
+  db.ref('jogos').orderByChild('aoVivo').equalTo(true).on('value', (snapshot) => {
+    const placares = document.querySelector('.placares');
+    placares.innerHTML = '';
+    
+    snapshot.forEach((childSnapshot) => {
+      const jogo = childSnapshot.val();
+      const div = document.createElement('div');
+      div.className = 'placar';
+      div.textContent = `${jogo.timeA} ${jogo.golsA} - ${jogo.golsB} ${jogo.timeB}`;
+      placares.appendChild(div);
+    });
+  });
+  
+  // Buscar tabela de classificação (precisa implementar lógica de pontuação)
+  // Buscar artilheiros
+  db.ref('jogadores').orderByChild('gols').limitToLast(5).on('value', (snapshot) => {
+    const tabela = document.querySelectorAll('table')[2]; // Ajuste o índice conforme necessário
+    const tbody = tabela.querySelector('tbody') || tabela.createTBody();
+    tbody.innerHTML = '';
+    
+    snapshot.forEach((childSnapshot) => {
+      const jogador = childSnapshot.val();
+      const tr = document.createElement('tr');
+      tr.innerHTML = `<td>${jogador.nome}</td><td>${jogador.time}</td><td>${jogador.gols}</td>`;
+      tbody.appendChild(tr);
+    });
+  });
+</script>
+
 </body>
 </html>

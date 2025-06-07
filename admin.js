@@ -1,105 +1,121 @@
 
-const times = [];
-const jogadores = [];
-const jogos = [];
+// Referências do Firebase
+const dbTimes = db.ref('times');
+const dbJogadores = db.ref('jogadores');
+const dbJogos = db.ref('jogos');
+
+// Carregar dados iniciais
+dbTimes.on('value', (snapshot) => {
+  atualizarSelectTimes(snapshot.val());
+});
 
 // Cadastro de times
 document.getElementById('formTime').addEventListener('submit', function(e) {
   e.preventDefault();
   const nomeTime = document.getElementById('nomeTime').value.trim();
-  if (nomeTime && !times.includes(nomeTime)) {
-    times.push(nomeTime);
-    atualizarListaTimes();
-    atualizarSelectTimes();
+  if (nomeTime) {
+    dbTimes.push({ nome: nomeTime });
   }
-  document.getElementById('formTime').reset();
+  this.reset();
 });
 
 // Cadastro de jogadores
 document.getElementById('formJogador').addEventListener('submit', function(e) {
   e.preventDefault();
-  const nome = document.getElementById('nomeJogador').value.trim();
-  const posicao = document.getElementById('posicaoJogador').value.trim();
-  const numero = document.getElementById('numeroJogador').value.trim();
-  const time = document.getElementById('selectTime').value;
-  if (nome && posicao && numero && time) {
-    jogadores.push({ nome, posicao, numero, time });
-    atualizarListaJogadores();
+  const jogador = {
+    nome: document.getElementById('nomeJogador').value.trim(),
+    posicao: document.getElementById('posicaoJogador').value.trim(),
+    numero: document.getElementById('numeroJogador').value.trim(),
+    time: document.getElementById('selectTime').value,
+    gols: 0
+  };
+  
+  if (jogador.nome && jogador.posicao && jogador.numero && jogador.time) {
+    dbJogadores.push(jogador);
   }
-  document.getElementById('formJogador').reset();
+  this.reset();
 });
 
 // Cadastro de jogos
 document.getElementById('formJogo').addEventListener('submit', function(e) {
   e.preventDefault();
-  const timeA = document.getElementById('timeA').value.trim();
-  const timeB = document.getElementById('timeB').value.trim();
-  const data = document.getElementById('dataJogo').value;
-  const hora = document.getElementById('horaJogo').value;
-  const aoVivo = document.getElementById('aoVivo').checked;
-  if (timeA && timeB && data && hora) {
-    jogos.push({ timeA, timeB, data, hora, golsA: 0, golsB: 0, aoVivo });
-    atualizarListaJogos();
+  const jogo = {
+    timeA: document.getElementById('timeA').value.trim(),
+    timeB: document.getElementById('timeB').value.trim(),
+    data: document.getElementById('dataJogo').value,
+    hora: document.getElementById('horaJogo').value,
+    golsA: 0,
+    golsB: 0,
+    aoVivo: document.getElementById('aoVivo').checked,
+    finalizado: false
+  };
+  
+  if (jogo.timeA && jogo.timeB && jogo.data && jogo.hora && jogo.timeA !== jogo.timeB) {
+    dbJogos.push(jogo);
+  } else if (jogo.timeA === jogo.timeB) {
+    alert('Um time não pode jogar contra si mesmo!');
   }
-  document.getElementById('formJogo').reset();
+  this.reset();
 });
 
-function atualizarListaTimes() {
-  const lista = document.getElementById('listaTimes');
-  lista.innerHTML = '';
-  times.forEach(time => {
-    const li = document.createElement('li');
-    li.textContent = time;
-    lista.appendChild(li);
-  });
-}
-
-function atualizarSelectTimes() {
+// Atualizar select de times
+function atualizarSelectTimes(times) {
   const select = document.getElementById('selectTime');
   select.innerHTML = '<option value="" disabled selected>Selecione um time</option>';
-  times.forEach(time => {
-    const option = document.createElement('option');
-    option.value = time;
-    option.textContent = time;
-    select.appendChild(option);
-  });
+  
+  if (times) {
+    Object.values(times).forEach(time => {
+      const option = document.createElement('option');
+      option.value = time.nome;
+      option.textContent = time.nome;
+      select.appendChild(option);
+    });
+  }
 }
 
-function atualizarListaJogadores() {
-  const lista = document.getElementById('listaJogadores');
-  lista.innerHTML = '';
-  jogadores.forEach(jogador => {
-    const li = document.createElement('li');
-    li.textContent = `${jogador.nome} - ${jogador.posicao} - ${jogador.numero} - ${jogador.time}`;
-    lista.appendChild(li);
-  });
-}
-
-function atualizarListaJogos() {
+// Listener para atualização em tempo real
+dbJogos.on('value', (snapshot) => {
   const lista = document.getElementById('listaJogos');
   lista.innerHTML = '';
-  jogos.forEach((jogo, index) => {
+  
+  snapshot.forEach((childSnapshot) => {
+    const jogo = childSnapshot.val();
+    const key = childSnapshot.key;
+    
     const li = document.createElement('li');
+    li.style.marginBottom = '15px';
+    li.style.padding = '10px';
+    li.style.border = '1px solid #ddd';
+    li.style.borderRadius = '4px';
+    
     li.innerHTML = `
       <strong>${jogo.timeA} ${jogo.golsA} x ${jogo.golsB} ${jogo.timeB}</strong>
       <br>📅 ${jogo.data} ⏰ ${jogo.hora}
       ${jogo.aoVivo ? "<span style='color:red; font-weight:bold;'> AO VIVO</span>" : ""}
       <br>
-      <button onclick="atualizarGols(${index}, 'A')">+ Gol ${jogo.timeA}</button>
-      <button onclick="atualizarGols(${index}, 'B')">+ Gol ${jogo.timeB}</button>
-      <button onclick="finalizarJogo(${index})">Finalizar Jogo</button>
+      <button onclick="atualizarGols('${key}', 'A')">+ Gol ${jogo.timeA}</button>
+      <button onclick="atualizarGols('${key}', 'B')">+ Gol ${jogo.timeB}</button>
+      <button onclick="finalizarJogo('${key}')">Finalizar Jogo</button>
     `;
     lista.appendChild(li);
   });
+});
+
+// Funções globais para atualização
+function atualizarGols(key, time) {
+  const ref = db.ref(`jogos/${key}`);
+  ref.transaction((jogo) => {
+    if (jogo) {
+      if (time === 'A') jogo.golsA++;
+      if (time === 'B') jogo.golsB++;
+    }
+    return jogo;
+  });
 }
 
-function atualizarGols(index, time) {
-  if (time === 'A') jogos[index].golsA++;
-  if (time === 'B') jogos[index].golsB++;
-  atualizarListaJogos();
-}
-
-function finalizarJogo(index) {
-  jogos[index].aoVivo = false;
-  atualizarListaJogos();
+function finalizarJogo(key) {
+  db.ref(`jogos/${key}`).update({
+    aoVivo: false,
+    finalizado: true
+  });
 }

@@ -3,19 +3,11 @@
 <html lang="pt-br">
 <head>
 <meta charset="UTF-8">
-<title>Campeonato Rural</title>
+<title>Campeonato Rural - Visualização</title>
 <link rel="stylesheet" href="style.css">
-
 <script src="https://www.gstatic.com/firebasejs/8.6.8/firebase-app.js"></script>
 <script src="https://www.gstatic.com/firebasejs/8.6.8/firebase-database.js"></script>
-<script>
-  const firebaseConfig = {
-    databaseURL: "https://campeonato-rural-default-rtdb.firebaseio.com/"
-  };
-  firebase.initializeApp(firebaseConfig);
-  const db = firebase.database();
-</script>
-
+<script src="firebase-config.js"></script>
 </head>
 <body>
 
@@ -25,61 +17,38 @@
 
 <div class="container">
   <h2>Placar Ao Vivo</h2>
-  <div class="placares">
-    <div class="placar">São Pedro 1 - 0 União</div>
-    <div class="placar">Juventude 0 - 1 Vila Nova</div>
-    <div class="placar">Floresta 0 - 0 Palmeiras</div>
-    <div class="placar">América 1 - 1 Cruzeiro</div>
-  </div>
-
-  <h2>Tabela de Pontos</h2>
-  <table>
-    <tr><th>Time</th><th>Pontos</th><th>Jogos</th><th>Vitórias</th><th>Empates</th><th>Derrotas</th></tr>
-    <tr><td>São Pedro</td><td>15</td><td>7</td><td>5</td><td>0</td><td>2</td></tr>
-    <tr><td>Floresta</td><td>12</td><td>7</td><td>4</td><td>0</td><td>3</td></tr>
-    <tr><td>União</td><td>10</td><td>7</td><td>3</td><td>1</td><td>3</td></tr>
-    <tr><td>Vila Nova</td><td>9</td><td>7</td><td>3</td><td>0</td><td>4</td></tr>
-  </table>
+  <div id="placaresAoVivo" class="placares"></div>
 
   <h2>Saldo de Gols dos Jogadores</h2>
-  <table>
+  <table id="tabelaJogadores">
     <tr><th>Jogador</th><th>Time</th><th>Gols</th></tr>
-    <tr><td>João</td><td>São Pedro</td><td>4</td></tr>
-    <tr><td>Lucas</td><td>Floresta</td><td>3</td></tr>
-    <tr><td>Pedro</td><td>União</td><td>2</td></tr>
-    <tr><td>Rafael</td><td>Vila Nova</td><td>1</td></tr>
   </table>
 </div>
 
 <script>
-  // Buscar jogos ao vivo
-  db.ref('jogos').orderByChild('aoVivo').equalTo(true).on('value', (snapshot) => {
-    const placares = document.querySelector('.placares');
-    placares.innerHTML = '';
-    
-    snapshot.forEach((childSnapshot) => {
-      const jogo = childSnapshot.val();
-      const div = document.createElement('div');
-      div.className = 'placar';
-      div.textContent = `${jogo.timeA} ${jogo.golsA} - ${jogo.golsB} ${jogo.timeB}`;
-      placares.appendChild(div);
-    });
+const placaresDiv = document.getElementById('placaresAoVivo');
+const tabelaJogadores = document.getElementById('tabelaJogadores');
+
+db.ref('jogos').on('value', snapshot => {
+  const jogos = snapshot.val() || {};
+  placaresDiv.innerHTML = '';
+  Object.values(jogos).forEach(jogo => {
+    const div = document.createElement('div');
+    div.className = 'placar';
+    div.textContent = `${jogo.timeA} ${jogo.golsA} x ${jogo.golsB} ${jogo.timeB}`;
+    placaresDiv.appendChild(div);
   });
-  
-  // Buscar tabela de classificação (precisa implementar lógica de pontuação)
-  // Buscar artilheiros
-  db.ref('jogadores').orderByChild('gols').limitToLast(5).on('value', (snapshot) => {
-    const tabela = document.querySelectorAll('table')[2]; // Ajuste o índice conforme necessário
-    const tbody = tabela.querySelector('tbody') || tabela.createTBody();
-    tbody.innerHTML = '';
-    
-    snapshot.forEach((childSnapshot) => {
-      const jogador = childSnapshot.val();
-      const tr = document.createElement('tr');
-      tr.innerHTML = `<td>${jogador.nome}</td><td>${jogador.time}</td><td>${jogador.gols}</td>`;
-      tbody.appendChild(tr);
-    });
+});
+
+db.ref('jogadores').on('value', snapshot => {
+  const jogadores = snapshot.val() || {};
+  tabelaJogadores.innerHTML = '<tr><th>Jogador</th><th>Time</th><th>Gols</th></tr>';
+  Object.values(jogadores).forEach(jogador => {
+    const tr = document.createElement('tr');
+    tr.innerHTML = `<td>${jogador.nome}</td><td>${jogador.time}</td><td>${jogador.gols || 0}</td>`;
+    tabelaJogadores.appendChild(tr);
   });
+});
 </script>
 
 </body>

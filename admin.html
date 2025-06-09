@@ -1,66 +1,100 @@
-  <!DOCTYPE html>
-  <html lang="pt-br">
-  <head>
+<!DOCTYPE html>
+<html lang="pt-br">
+<head>
   <meta charset="UTF-8">
-  <title>Campeonato Rural</title>
+  <title>Admin - Campeonato Rural</title>
   <link rel="stylesheet" href="style.css">
-  
   <script src="https://www.gstatic.com/firebasejs/8.6.8/firebase-app.js"></script>
   <script src="https://www.gstatic.com/firebasejs/8.6.8/firebase-database.js"></script>
- <script src="firebase-config.js"></script>
-  
-  </head>
-  <body>
-  <div id="login-container" style="max-width: 400px; margin: 50px auto; padding: 20px; background: white; border-radius: 8px; text-align: center;">
-    <h2>Acesso Administrativo</h2>
-    <form id="login-form">
-      <input type="password" id="senha" placeholder="Digite a senha" required style="width: 100%; padding: 10px; margin: 10px 0; border: 1px solid #ccc; border-radius: 4px;">
-      <button type="submit" style="background-color: #4CAF50; color: white; padding: 10px 20px; border: none; border-radius: 4px; cursor: pointer;">Acessar</button>
-    </form>
+  <script src="firebase-config.js"></script>
+</head>
+<body>
+  <div id="login-container">
+    <div class="login-box">
+      <h2>Acesso Administrativo</h2>
+      <form id="login-form">
+        <input type="password" id="senha" placeholder="Digite a senha" required>
+        <button type="submit">Acessar</button>
+      </form>
+    </div>
   </div>
-  
-  <header>
-    <h1>Admin - Campeonato Rural</h1>
-  </header>
-  
-  <div class="container">
-  
-    <h2>Cadastrar Time</h2>
-    <form id="formTime">
-      Nome do Time: <input type="text" id="nomeTime" required>
-      <button type="submit">Cadastrar Time</button>
-    </form>
-    <ul id="listaTimes"></ul>
-  
-    <h2>Cadastrar Jogador</h2>
-    <h2>Saldo de Gols dos Jogadores</h2>
-    <table>
-      <tr><th>Jogador</th><th>Time</th><th>Gols</th></tr>
-      <tr><td>João</td><td>São Pedro</td><td>4</td></tr>
-      <tr><td>Lucas</td><td>Floresta</td><td>3</td></tr>
-      <tr><td>Pedro</td><td>União</td><td>2</td></tr>
-      <tr><td>Rafael</td><td>Vila Nova</td><td>1</td></tr>
-    </table>
-  </div>
-  
-  <script>
-    document.getElementById('login-form').addEventListener('submit', function(e) {
-      e.preventDefault();
-      const senha = document.getElementById('senha').value;
-      if (senha === 'admin123') {
-        document.getElementById('login-container').style.display = 'none';
-        document.querySelector('.container').style.display = 'block';
-      } else {
-        alert('Senha incorreta!');
-      }
-    });
-    
-    // Esconder o container principal inicialmente
-    document.querySelector('.container').style.display = 'none';
-  </script>
-+<script src="admin.js"></script>
-  
-  </body>
-  </html>
-  
 
+  <div class="admin-container" id="admin-content">
+    <header>
+      <h1>Admin - Campeonato Rural</h1>
+    </header>
+    
+    <div class="container">
+      <section>
+        <h2>Cadastrar Time</h2>
+        <form id="formTime">
+          <div class="form-group">
+            <label for="nomeTime">Nome do Time:</label>
+            <input type="text" id="nomeTime" required>
+          </div>
+          <button type="submit">Cadastrar Time</button>
+        </form>
+        <div id="listaTimes"></div>
+      </section>
+
+      <section>
+        <h2>Cadastrar Jogador</h2>
+        <form id="formJogador">
+          <div class="form-group">
+            <label for="nomeJogador">Nome:</label>
+            <input type="text" id="nomeJogador" required>
+          </div>
+          <div class="form-group">
+            <label for="posicaoJogador">Posição:</label>
+            <input type="text" id="posicaoJogador" required>
+          </div>
+          <div class="form-group">
+            <label for="numeroJogador">Número:</label>
+            <input type="number" id="numeroJogador" required>
+          </div>
+          <div class="form-group">
+            <label for="selectTime">Time:</label>
+            <select id="selectTime" required></select>
+          </div>
+          <button type="submit">Cadastrar Jogador</button>
+        </form>
+        <div id="listaJogadores"></div>
+      </section>
+
+      <section>
+        <h2>Cadastrar Jogo</h2>
+        <form id="formJogo">
+          <div class="form-row">
+            <div class="form-group">
+              <label for="timeA">Time A:</label>
+              <input type="text" id="timeA" required>
+            </div>
+            <div class="form-group">
+              <label for="timeB">Time B:</label>
+              <input type="text" id="timeB" required>
+            </div>
+          </div>
+          <div class="form-row">
+            <div class="form-group">
+              <label for="dataJogo">Data:</label>
+              <input type="date" id="dataJogo" required>
+            </div>
+            <div class="form-group">
+              <label for="horaJogo">Hora:</label>
+              <input type="time" id="horaJogo" required>
+            </div>
+          </div>
+          <div class="form-group">
+            <input type="checkbox" id="aoVivo">
+            <label for="aoVivo">Jogo ao vivo</label>
+          </div>
+          <button type="submit">Cadastrar Jogo</button>
+        </form>
+        <div id="listaJogos"></div>
+      </section>
+    </div>
+  </div>
+
+  <script src="admin.js"></script>
+</body>
+</html>

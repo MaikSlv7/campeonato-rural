@@ -1,80 +1,66 @@
- 
- <!DOCTYPE html>
- <html lang="pt-br">
- <head>
- <meta charset="UTF-8">
- <title>Campeonato Rural</title>
- <link rel="stylesheet" href="style.css">
- 
- <script src="https://www.gstatic.com/firebasejs/8.6.8/firebase-app.js"></script>
- <script src="https://www.gstatic.com/firebasejs/8.6.8/firebase-database.js"></script>
--<script>
--  const firebaseConfig = {
--    databaseURL: "https://campeonato-rural-default-rtdb.firebaseio.com/"
--  };
--  firebase.initializeApp(firebaseConfig);
--  const db = firebase.database();
--</script>
-+<script src="firebase-config.js"></script>
- 
- </head>
- <body>
- <div id="login-container" style="max-width: 400px; margin: 50px auto; padding: 20px; background: white; border-radius: 8px; text-align: center;">
-   <h2>Acesso Administrativo</h2>
-   <form id="login-form">
-     <input type="password" id="senha" placeholder="Digite a senha" required style="width: 100%; padding: 10px; margin: 10px 0; border: 1px solid #ccc; border-radius: 4px;">
-     <button type="submit" style="background-color: #4CAF50; color: white; padding: 10px 20px; border: none; border-radius: 4px; cursor: pointer;">Acessar</button>
-   </form>
- </div>
- 
- <header>
-   <h1>Admin - Campeonato Rural</h1>
- </header>
- 
- <div class="container">
- 
-   <h2>Cadastrar Time</h2>
-   <form id="formTime">
-     Nome do Time: <input type="text" id="nomeTime" required>
-     <button type="submit">Cadastrar Time</button>
-   </form>
-   <ul id="listaTimes"></ul>
- 
-   <h2>Cadastrar Jogador</h2>
-diff --git a/admin.html b/admin.html
-index dab11369bf5a8a47e6c2ffb86294099e9db7e943..2a7d91fe4da843720ed820c675594878163f732e 100644
---- a/admin.html
-+++ b/admin.html
-@@ -83,28 +77,29 @@
-   <h2>Saldo de Gols dos Jogadores</h2>
-   <table>
-     <tr><th>Jogador</th><th>Time</th><th>Gols</th></tr>
-     <tr><td>João</td><td>São Pedro</td><td>4</td></tr>
-     <tr><td>Lucas</td><td>Floresta</td><td>3</td></tr>
-     <tr><td>Pedro</td><td>União</td><td>2</td></tr>
-     <tr><td>Rafael</td><td>Vila Nova</td><td>1</td></tr>
-   </table>
- </div>
- 
- <script>
-   document.getElementById('login-form').addEventListener('submit', function(e) {
-     e.preventDefault();
-     const senha = document.getElementById('senha').value;
-     if (senha === 'admin123') {
-       document.getElementById('login-container').style.display = 'none';
-       document.querySelector('.container').style.display = 'block';
-     } else {
-       alert('Senha incorreta!');
-     }
-   });
-   
-   // Esconder o container principal inicialmente
-   document.querySelector('.container').style.display = 'none';
- </script>
+  <!DOCTYPE html>
+  <html lang="pt-br">
+  <head>
+  <meta charset="UTF-8">
+  <title>Campeonato Rural</title>
+  <link rel="stylesheet" href="style.css">
+  
+  <script src="https://www.gstatic.com/firebasejs/8.6.8/firebase-app.js"></script>
+  <script src="https://www.gstatic.com/firebasejs/8.6.8/firebase-database.js"></script>
+ <script src="firebase-config.js"></script>
+  
+  </head>
+  <body>
+  <div id="login-container" style="max-width: 400px; margin: 50px auto; padding: 20px; background: white; border-radius: 8px; text-align: center;">
+    <h2>Acesso Administrativo</h2>
+    <form id="login-form">
+      <input type="password" id="senha" placeholder="Digite a senha" required style="width: 100%; padding: 10px; margin: 10px 0; border: 1px solid #ccc; border-radius: 4px;">
+      <button type="submit" style="background-color: #4CAF50; color: white; padding: 10px 20px; border: none; border-radius: 4px; cursor: pointer;">Acessar</button>
+    </form>
+  </div>
+  
+  <header>
+    <h1>Admin - Campeonato Rural</h1>
+  </header>
+  
+  <div class="container">
+  
+    <h2>Cadastrar Time</h2>
+    <form id="formTime">
+      Nome do Time: <input type="text" id="nomeTime" required>
+      <button type="submit">Cadastrar Time</button>
+    </form>
+    <ul id="listaTimes"></ul>
+  
+    <h2>Cadastrar Jogador</h2>
+    <h2>Saldo de Gols dos Jogadores</h2>
+    <table>
+      <tr><th>Jogador</th><th>Time</th><th>Gols</th></tr>
+      <tr><td>João</td><td>São Pedro</td><td>4</td></tr>
+      <tr><td>Lucas</td><td>Floresta</td><td>3</td></tr>
+      <tr><td>Pedro</td><td>União</td><td>2</td></tr>
+      <tr><td>Rafael</td><td>Vila Nova</td><td>1</td></tr>
+    </table>
+  </div>
+  
+  <script>
+    document.getElementById('login-form').addEventListener('submit', function(e) {
+      e.preventDefault();
+      const senha = document.getElementById('senha').value;
+      if (senha === 'admin123') {
+        document.getElementById('login-container').style.display = 'none';
+        document.querySelector('.container').style.display = 'block';
+      } else {
+        alert('Senha incorreta!');
+      }
+    });
+    
+    // Esconder o container principal inicialmente
+    document.querySelector('.container').style.display = 'none';
+  </script>
 +<script src="admin.js"></script>
- 
- </body>
- </html>
- 
-EOF
-)
+  
+  </body>
+  </html>
+  
+

@@ -1,17 +1,8 @@
- (cd "$(git rev-parse --show-toplevel)" && git apply --3way <<'EOF' 
-diff --git a/admin.js b/admin.js
-index c3ed6e98a8e4a82d541ffe266032c9dacc39ebaf..3ca5fb58133d25cde692f3500baa649689a0afbc 100644
---- a/admin.js
-+++ b/admin.js
-@@ -1,4 +1,80 @@
--document.getElementById('form').addEventListener('submit', function(e) {
 +// Lógica de cadastro para a tela administrativa
 +
 +// ---- Cadastro de Times ----
 +document.getElementById('formTime').addEventListener('submit', (e) => {
-   e.preventDefault();
--  alert('Formulário salvo sem recarregar!');
--});
+    e.preventDefault();
 +  const nome = document.getElementById('nomeTime').value.trim();
 +  if (!nome) return;
 +  db.ref('times').push({ nome });
@@ -87,6 +78,6 @@ index c3ed6e98a8e4a82d541ffe266032c9dacc39ebaf..3ca5fb58133d25cde692f3500baa6496
 +    ul.appendChild(li);
 +  });
 +});
- 
-EOF
-)
+  
+-EOF
+-)

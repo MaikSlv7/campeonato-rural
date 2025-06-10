@@ -1,3 +1,8 @@
+// No início do arquivo
+firebase.auth().signInAnonymously()
+  .catch((error) => {
+    console.error("Erro de autenticação:", error);
+  });
 // Login
 document.getElementById('login-form').addEventListener('submit', (e) => {
   e.preventDefault();

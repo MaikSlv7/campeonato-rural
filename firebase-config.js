@@ -8,5 +8,7 @@ const firebaseConfig = {
   appId: "SEU_APP_ID"
 };
 
+// Inicialize o Firebase
 firebase.initializeApp(firebaseConfig);
 const db = firebase.database();
+const auth = firebase.auth();

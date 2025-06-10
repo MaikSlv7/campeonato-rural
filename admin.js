@@ -3,15 +3,29 @@ firebase.auth().signInAnonymously()
   .catch((error) => {
     console.error("Erro de autenticação:", error);
   });
-// Login
+// Sistema de login seguro
 document.getElementById('login-form').addEventListener('submit', (e) => {
   e.preventDefault();
-  const senha = document.getElementById('senha').value;
-  if (senha === 'campeonato2025') {
+  const email = "admin@rural.com"; // Email fixo
+  const password = document.getElementById('senha').value;
+
+  // Autenticação com Firebase
+  auth.signInWithEmailAndPassword(email, password)
+    .then((userCredential) => {
+      document.getElementById('login-container').style.display = 'none';
+      document.getElementById('admin-content').style.display = 'block';
+    })
+    .catch((error) => {
+      alert('Acesso negado! Senha incorreta.');
+      console.error("Erro de autenticação:", error);
+    });
+});
+
+// Verificar se usuário já está logado
+auth.onAuthStateChanged((user) => {
+  if (user) {
     document.getElementById('login-container').style.display = 'none';
     document.getElementById('admin-content').style.display = 'block';
-  } else {
-    alert('Senha incorreta!');
   }
 });
 

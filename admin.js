@@ -7,7 +7,7 @@ firebase.auth().signInAnonymously()
 document.getElementById('login-form').addEventListener('submit', (e) => {
   e.preventDefault();
   const senha = document.getElementById('senha').value;
-  if (senha === 'admin123') {
+  if (senha === 'campeonato2025') {
     document.getElementById('login-container').style.display = 'none';
     document.getElementById('admin-content').style.display = 'block';
   } else {

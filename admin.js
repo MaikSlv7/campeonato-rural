@@ -46,23 +46,44 @@ document.getElementById('formTime').addEventListener('submit', async (e) => {
 });
 
 // Listar times com edição/exclusão
+// Substitua a função listarTimes por esta versão corrigida:
 function listarTimes() {
   db.ref('times').on('value', (snapshot) => {
     const listaTimes = document.getElementById('listaTimes');
-    listaTimes.innerHTML = '<h3>Times Cadastrados</h3><ul id="times-list"></ul>';
-    const ul = document.getElementById('times-list');
-    ul.innerHTML = '';
+    listaTimes.innerHTML = '<h3>Times Cadastrados</h3>';
+    
+    if (!snapshot.exists()) {
+      listaTimes.innerHTML += '<p>Nenhum time cadastrado ainda.</p>';
+      return;
+    }
+    
+    const table = document.createElement('table');
+    table.innerHTML = `
+      <thead>
+        <tr>
+          <th>Nome do Time</th>
+          <th>Ações</th>
+        </tr>
+      </thead>
+      <tbody></tbody>
+    `;
+    
+    const tbody = table.querySelector('tbody');
     
     snapshot.forEach((childSnapshot) => {
       const time = childSnapshot.val();
-      const li = document.createElement('li');
-      li.innerHTML = `
-        ${time.nome}
-        <button class="btn-editar" data-key="${childSnapshot.key}">Editar</button>
-        <button class="btn-excluir" data-key="${childSnapshot.key}">Excluir</button>
+      const tr = document.createElement('tr');
+      tr.innerHTML = `
+        <td>${time.nome}</td>
+        <td>
+          <button class="btn-editar" data-key="${childSnapshot.key}">Editar</button>
+          <button class="btn-excluir" data-key="${childSnapshot.key}">Excluir</button>
+        </td>
       `;
-      ul.appendChild(li);
+      tbody.appendChild(tr);
     });
+    
+    listaTimes.appendChild(table);
   });
 }
 

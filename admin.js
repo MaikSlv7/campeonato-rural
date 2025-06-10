@@ -3,6 +3,11 @@ firebase.auth().signInAnonymously()
   .catch((error) => {
     console.error("Erro de autenticação:", error);
   });
+document.getElementById('logout-btn').addEventListener('click', () => {
+  auth.signOut().then(() => {
+    window.location.reload();
+  });
+});
 // Sistema de login seguro
 document.getElementById('login-form').addEventListener('submit', (e) => {
   e.preventDefault();

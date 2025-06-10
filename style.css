@@ -192,3 +192,44 @@ h2 {
     gap: 0;
   }
 }
+/* Adicione isso no final do arquivo style.css */
+
+.admin-container {
+  max-width: 1200px;
+  margin: 20px auto; /* Alterado para centralizar */
+  padding: 20px;
+  background: #fff; /* Adicionado fundo branco */
+  border-radius: 10px; /* Borda arredondada */
+  box-shadow: 0 4px 6px rgba(0,0,0,0.1); /* Sombra */
+}
+
+/* Melhorar o layout dos formulários */
+.container {
+  display: grid;
+  grid-template-columns: 1fr;
+  gap: 30px;
+}
+
+section {
+  background: #f8f9fa;
+  padding: 20px;
+  border-radius: 8px;
+  border-left: 4px solid #4CAF50;
+}
+
+/* Ajustar os botões de ação */
+#times-list li button {
+  margin-left: 8px;
+}
+
+/* Melhorar a responsividade */
+@media (max-width: 768px) {
+  .admin-container {
+    margin: 10px;
+    padding: 15px;
+  }
+  
+  section {
+    padding: 15px;
+  }
+}
